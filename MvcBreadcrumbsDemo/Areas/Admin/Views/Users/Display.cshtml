@@ -1,0 +1,10 @@
+﻿@{
+	ViewBag.Title = "Display";
+}
+
+<h2>Here you can view user info.</h2>
+
+<ul>
+	<li>@Html.ActionLink("Show settings for this user", "Index", "UserSettings", new { area = "Admin", id = 123 }, null)</li>
+</ul>
+

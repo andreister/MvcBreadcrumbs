@@ -1,0 +1,7 @@
+body { font-size: 75%; font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif; color: #232323; background-color: #fff; }
+
+#breadcrumbs {font-size: 0.8em;}
+#breadcrumbs a, span { margin: 0 .4em 0 0; }
+#breadcrumbs a { color: #0000A3; font-weight: normal; }
+#breadcrumbs a:hover { color: #CC6600; }
+#breadcrumbs span.selected { font-weight: bold; }

@@ -1,0 +1,18 @@
+﻿@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Manage users</h2>
+
+
+<ul>
+	<li>@Html.ActionLink("Create a new user", "Create", "Users", new { area = "Admin" }, null)</li>
+</ul>
+
+<h2>Users list</h2>
+<ul>
+	@for (int i = 1; i < 5; i++) {
+		var randomName = Path.GetRandomFileName().Replace(".", "");
+		<li>@Html.ActionLink("User " + randomName, "Display", "Users", new { area = "Admin", id = i }, null)</li>
+	}
+</ul>

@@ -1,0 +1,10 @@
+﻿@{
+	ViewBag.Title = "Index";
+}
+<h2>Hello from HOME controller, INDEX view!</h2>
+
+<ul>
+	<li>@Html.ActionLink("Admin section", "Index", "Default", new { area = "Admin" }, null)</li>
+	<li>@Html.ActionLink("Reports section", "Index", "Default", new { area = "Reports" }, null)</li>
+	<li>@Html.ActionLink("About us", "Index", "About")</li>
+</ul>
