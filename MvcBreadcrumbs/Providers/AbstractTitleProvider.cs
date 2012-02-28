@@ -1,4 +1,5 @@
 ﻿using System.Web.Routing;
+using MvcBreadcrumbs.Providers.Extensions;
 
 namespace MvcBreadcrumbs.Providers
 {
@@ -18,25 +19,33 @@ namespace MvcBreadcrumbs.Providers
 
 		protected abstract string GetTitleInternal(Node node, long id);
 
-		protected long GetId(NodeData data, RequestContext context)
+		protected virtual long GetId(NodeData nodeData, RequestContext context)
 		{
-			var contextValues = context.RouteData.Values;
-			var nodeValues = data.RouteValues;
-			long result;
-			if (contextValues.ContainsKey("id") && long.TryParse(contextValues["id"].ToString(), out result)) {
-				return result;
-			}
-			if (nodeValues.ContainsKey("id") && long.TryParse(nodeValues["id"].ToString(), out result)) {
-				return result;
-			}
-			return 0;
+			string key = "id";
+			var result = context.RouteData.Values.GetValue(key) ?? nodeData.RouteValues.GetValue(key);
+
+			return result ?? 0;
 		}
 
 		protected virtual string DefaultTitle
 		{
 			get { return "..."; }
 		}
+	}
 
-		
+	namespace Extensions
+	{
+		internal static class RouteValueDictionaryExtensions
+		{
+			internal static long? GetValue(this RouteValueDictionary dictionary, string key)
+			{
+				long result;
+				if (dictionary.ContainsKey(key) && long.TryParse(dictionary[key].ToString(), out result)) {
+					return result;
+				}
+
+				return null;
+			}
+		}
 	}
 }

@@ -62,9 +62,6 @@
     <Compile Include="Areas\Admin\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserSettingsController.cs" />
-    <Compile Include="Areas\Reports\Controllers\DefaultController.cs" />
-    <Compile Include="Areas\Reports\Controllers\UsageStatsController.cs" />
-    <Compile Include="Areas\Reports\ReportsAreaRegistration.cs" />
     <Compile Include="Breadcrumbs\Builder.cs" />
     <Compile Include="Breadcrumbs\UserNodeTitleProvider.cs" />
     <Compile Include="Breadcrumbs\UserSettingsNodeTitleProvider.cs" />
@@ -125,8 +122,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Reports\Models\" />
-    <Folder Include="Areas\Reports\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -154,19 +149,7 @@
     <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Reports\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Reports\Views\Default\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Reports\Views\UsageStats\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Reports\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Users\Display.cshtml" />
@@ -191,7 +174,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>34971</DevelopmentServerPort>
+          <DevelopmentServerPort>15996</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

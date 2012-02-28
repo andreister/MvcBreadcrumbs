@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Web.Mvc;
 using MvcBreadcrumbs.Providers;
 
 namespace MvcBreadcrumbs
 {
 	public class MvcNode<TController> : Node
+		where TController : IController
 	{
 		public MvcNode(string title, Expression<Action<TController>> action, params Node[] children)
 			: base(children)

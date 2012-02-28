@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBreadcrumbs", "MvcBreadc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBreadcrumbsDemo", "MvcBreadcrumbsDemo\MvcBreadcrumbsDemo.csproj", "{BAED229B-0D60-46AE-AAFC-8F1A09A2DDF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBreadcrumbsTests", "MvcBreadcrumbsTests\MvcBreadcrumbsTests.csproj", "{38FB3C32-813E-463F-A940-18B36C47CAAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{BAED229B-0D60-46AE-AAFC-8F1A09A2DDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAED229B-0D60-46AE-AAFC-8F1A09A2DDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAED229B-0D60-46AE-AAFC-8F1A09A2DDF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38FB3C32-813E-463F-A940-18B36C47CAAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38FB3C32-813E-463F-A940-18B36C47CAAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38FB3C32-813E-463F-A940-18B36C47CAAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38FB3C32-813E-463F-A940-18B36C47CAAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

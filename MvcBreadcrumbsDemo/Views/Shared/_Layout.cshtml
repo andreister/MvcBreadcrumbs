@@ -7,12 +7,20 @@
 </head>
 
 <body>
-	<hr>
+	<div id="breadcrumbs">
 	@{
-		var breadcrumbs = MvcBreadcrumbs.BreadcrumbTrail.GetInstance(MvcBreadcrumbsDemo.Breadcrumbs.Builder.CreateSiteMap);
-		@breadcrumbs.RenderHtml(Request.RequestContext, Html);
+		var breadcrumbs = MvcBreadcrumbs.BreadcrumbTrail.GetInstance(MvcBreadcrumbsDemo.Breadcrumbs.Builder.CreateSiteMap).Build(Request.RequestContext);
+		for (int i = 0; i < breadcrumbs.Count; i++) {
+			var item = breadcrumbs[i];
+			if (i == breadcrumbs.Count - 1) {
+				<span class='selected'>@item.Name</span>
+			}
+			else {
+				@item.Url <span>&gt;</span>
+			}
+		}
 	}
-	<hr>
+	</div>
 	@RenderBody()
 </body>
 </html>

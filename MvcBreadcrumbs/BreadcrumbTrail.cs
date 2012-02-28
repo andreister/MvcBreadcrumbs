@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
@@ -13,7 +13,7 @@ namespace MvcBreadcrumbs
 		private static BreadcrumbTrail _instance;
 		private static readonly object _lock = new object();
 
-		public BreadcrumbTrail(Node root)
+		private BreadcrumbTrail(Node root)
 		{
 			_root = root;
 		}
@@ -31,33 +31,26 @@ namespace MvcBreadcrumbs
 			return _instance;
 		}
 
-		public MvcHtmlString RenderHtml(RequestContext context, HtmlHelper html)
+		public List<Breadcrumb> Build(RequestContext context)
 		{
-			var result = new StringBuilder();
+			var result = new List<Breadcrumb>();
 
-			var breadcrumbs = Build(context);
+			var controllerContext = new ControllerContext {RequestContext = context};
+			var html = new HtmlHelper(new ViewContext(controllerContext, new WebFormView(controllerContext, "some\\path"), new ViewDataDictionary(), new TempDataDictionary(), new StringWriter()), new ViewPage());
 
-			result.Append("<div id='breadcrumbs'>");
+			var breadcrumbs = BuildInternal(context);
+
 			for (int i = 0; i < breadcrumbs.Count; i++) {
 				var data = breadcrumbs[i].Data;
-
-				if (i == breadcrumbs.Count - 1) {
-					result.AppendFormat("<span class='selected'>{0}</span>", data.Title);
-				}
-				else if (i == 0) {
-					result.AppendFormat("<a href='/'>{0}</a><span>&gt;</span>", data.Title);
-				}
-				else {
-					var link = html.ActionLink(data.Title, data.Action, data.Controller, data.RouteValues, null).ToHtmlString();
-					result.AppendFormat("{0}<span>&gt;</span>", link);
-				}
+				var link = (i == 0) ? new MvcHtmlString(string.Format("<a href='/'>{0}</a>", data.Title)) : html.ActionLink(data.Title, data.Action, data.Controller, data.RouteValues, null);
 				data.RouteValues.Clear();
+
+				result.Add(new Breadcrumb { Name = data.Title, Url = link });
 			}
-			result.Append("</div>");
-			return new MvcHtmlString(result.ToString());
+			return result;
 		}
 
-		private List<Node> Build(RequestContext context)
+		private List<Node> BuildInternal(RequestContext context)
 		{
 			var result = new List<Node>();
 
