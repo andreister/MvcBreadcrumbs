@@ -1,5 +1,5 @@
 ﻿using System.Web.Routing;
-using MvcBreadcrumbs.Providers.Extensions;
+using MvcBreadcrumbs.Providers.AbstractTitleProviderExtensions;
 
 namespace MvcBreadcrumbs.Providers
 {
@@ -33,7 +33,7 @@ namespace MvcBreadcrumbs.Providers
 		}
 	}
 
-	namespace Extensions
+	namespace AbstractTitleProviderExtensions
 	{
 		internal static class RouteValueDictionaryExtensions
 		{
