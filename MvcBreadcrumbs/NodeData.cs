@@ -4,21 +4,25 @@ namespace MvcBreadcrumbs
 {
 	public class NodeData
 	{
+		internal Node Node { get; private set; }
+		
 		public string Title { get; set; }
-		internal bool IsUpdatedByChild { get; set; }
-
+		public bool IsVisible { get; set; }
+		public bool IsClickable { get; set; }
 		public string Area { get; set; }
 		public string Controller { get; set; }
 		public string Action { get; set; }
 		public RouteValueDictionary RouteValues { get; private set; }
 
-		internal NodeData(string title)
+		internal NodeData(Node node)
 		{
-			Title = title;
+			Node = node;
 			RouteValues = new RouteValueDictionary();
+			IsClickable = true;
+			IsVisible = true;
 		}
-		
-		public NodeData(RequestContext context) : this((string)null)
+
+		public NodeData(RequestContext context) : this((Node)null)
 		{
 			var routeData = context.RouteData.Values;
 			var dataTokens = context.RouteData.DataTokens;

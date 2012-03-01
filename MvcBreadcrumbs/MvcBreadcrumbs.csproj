@@ -51,6 +51,7 @@
     <Compile Include="NodeData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AbstractTitleProvider.cs" />
+    <Compile Include="Providers\IClickabilityProvider.cs" />
     <Compile Include="Providers\ITitleProvider.cs" />
     <Compile Include="Providers\IVisibilityProvider.cs" />
   </ItemGroup>
