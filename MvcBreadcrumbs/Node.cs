@@ -36,7 +36,12 @@ namespace MvcBreadcrumbs
 			Parent._isUpdatedByChild = true;
 		}
 
-		internal void Resolve(RequestContext context)
+		public bool IsDynamic
+		{
+			get { return _titleProvider != null; }
+		}
+
+		internal void ApplyProviders(RequestContext context)
 		{
 			if (context == null)
 				return;
@@ -51,7 +56,7 @@ namespace MvcBreadcrumbs
 				Data.IsClickable = _clickabilityProvider.IsClickable(this, context);
 			}
 		}
-
+		
 		public override string ToString()
 		{
 			return Data.Title;

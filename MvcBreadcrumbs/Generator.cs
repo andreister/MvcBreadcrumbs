@@ -44,13 +44,16 @@ namespace MvcBreadcrumbs
 				if (!data.IsVisible) {
 					break;
 				}
-				var link = (i == 0) ? new MvcHtmlString(string.Format("<a href='/'>{0}</a>", data.Title)) : html.ActionLink(data.Title, data.Action, data.Controller, data.RouteValues, null);
-				data.RouteValues.Clear();
 
-				result.Add(new Breadcrumb {
-					Name = data.Title, 
-					Url = data.IsClickable ? link : null
-				});
+				MvcHtmlString link = null;
+				if (data.IsClickable) {
+					link = (i == 0)
+						? new MvcHtmlString(string.Format("<a href='/'>{0}</a>", data.Title))
+						: html.ActionLink(data.Title, data.Action, data.Controller, data.RouteValues, null);
+				}
+
+				data.RouteValues.Clear();
+				result.Add(new Breadcrumb { Name = data.Title, IsDynamic = breadcrumbs[i].IsDynamic, Url = link });
 			}
 			return result;
 		}
@@ -105,7 +108,7 @@ namespace MvcBreadcrumbs
 		{
 			internal static void Insert(this List<Node> list, Node node, RequestContext context)
 			{
-				node.Resolve(context);
+				node.ApplyProviders(context);
 				list.Insert(0, node);
 			}
 		}

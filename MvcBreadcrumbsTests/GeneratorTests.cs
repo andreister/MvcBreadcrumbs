@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Moq;
 using MvcBreadcrumbs;
+using MvcBreadcrumbs.Providers;
 using NUnit.Framework;
+using System.Linq;
 
 namespace MvcBreadcrumbsTests
 {
@@ -14,6 +17,8 @@ namespace MvcBreadcrumbsTests
 		#region Setup/Teardown and helpers
 
 		private Generator _generator;
+		private static readonly string _dynamicNodeTitle = "taken from database!";
+
 		private readonly Node _root = 
 			new MvcNode<HomeController>("Home", x => x.Index(),
 				new MvcNode<AdminController>("Admin", x => x.Index(), 
@@ -23,6 +28,9 @@ namespace MvcBreadcrumbsTests
 				new MvcNode<ReportsController>("Reports", x => x.Index(),
 					new MvcNode<ReportsController>("Reports Nested 1", x => x.Nested1()),
 					new MvcNode<ReportsController>("Reports Nested 2", x => x.Nested2())
+				),
+				new MvcNode<UsersController>("Users", x => x.Index(),
+					new MvcNode<UsersController>(new UserTitleProvider(), x => x.Display())
 				)
 			);
 
@@ -63,6 +71,20 @@ namespace MvcBreadcrumbsTests
 			public void Nested1() { }
 			public void Nested2() { }
 		}
+	
+		class UsersController : Controller
+		{
+			public void Index() { }
+			public void Display() { }
+		}
+
+		class UserTitleProvider : ITitleProvider
+		{
+			public string GetTitle(Node node, RequestContext context)
+			{
+				return _dynamicNodeTitle;
+			}
+		}
 
 		#endregion
 
@@ -71,6 +93,16 @@ namespace MvcBreadcrumbsTests
 		{
 			var context = GetMockedContext("unknowncontroller", "unknownaction");
 			_generator.BuildBreadcrumbs(context);
+		}
+
+		[Test]
+		public void DynamicNode()
+		{
+			var context = GetMockedContext("users", "display");
+			var node = _generator.BuildBreadcrumbs(context).Last();
+
+			Assert.That(node.IsDynamic, Is.True);
+			Assert.That(node.Name, Is.EqualTo(_dynamicNodeTitle));
 		}
 
 		[Test, TestCaseSource("Scenarios")]
