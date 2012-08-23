@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.Web.Routing;
 using MvcBreadcrumbs.Providers;
 
@@ -29,10 +30,9 @@ namespace MvcBreadcrumbs
 
 		internal abstract Node FindNode(NodeData searchData);
 
-		public void UpdateParentData(string title, long id)
+		public void UpdateParentData(Action<NodeData> update)
 		{
-			Parent.Data.RouteValues["id"] = id;
-			Parent.Data.Title = title;
+			update(Parent.Data);
 			Parent._isUpdatedByChild = true;
 		}
 

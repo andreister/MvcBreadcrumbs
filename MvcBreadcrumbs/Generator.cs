@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -47,11 +48,19 @@ namespace MvcBreadcrumbs
 
 				MvcHtmlString link = null;
 				if (data.IsClickable) {
-					link = (i == 0)
-						? new MvcHtmlString(string.Format("<a href='/'>{0}</a>", data.Title))
-						: html.ActionLink(data.Title, data.Action, data.Controller, data.RouteValues, null);
+					if (i == 0) {
+						link = new MvcHtmlString(string.Format("<a href='/'>{0}</a>", data.Title));
+					}
+					else {
+						var routeValues = data.RouteValues;
+						foreach (string key in data.QueryString.Keys) {
+							routeValues[key] = data.QueryString[key];
+						}
+						link = html.ActionLink(data.Title, data.Action, data.Controller, routeValues, null);
+					}
 				}
 
+				data.QueryString.Clear();
 				data.RouteValues.Clear();
 				result.Add(new Breadcrumb { Name = data.Title, IsDynamic = breadcrumbs[i].IsDynamic, Url = link });
 			}

@@ -1,4 +1,5 @@
-﻿using System.Web.Routing;
+﻿using System.Collections.Specialized;
+using System.Web.Routing;
 
 namespace MvcBreadcrumbs
 {
@@ -13,20 +14,30 @@ namespace MvcBreadcrumbs
 		public string Controller { get; set; }
 		public string Action { get; set; }
 		public RouteValueDictionary RouteValues { get; private set; }
+		public NameValueCollection QueryString { get; private set; }
 
 		internal NodeData(Node node)
 		{
 			Node = node;
 			RouteValues = new RouteValueDictionary();
+			QueryString = new NameValueCollection();
 			IsClickable = true;
 			IsVisible = true;
+		}
+
+		internal void CopyQueryString(RequestContext context)
+		{
+			var queryString = context.HttpContext.Request.QueryString;
+			foreach (string key in queryString.Keys) {
+				QueryString[key] = queryString[key];
+			}
 		}
 
 		public NodeData(RequestContext context) : this((Node)null)
 		{
 			var routeData = context.RouteData.Values;
 			var dataTokens = context.RouteData.DataTokens;
-
+			
 			Area = dataTokens.ContainsKey("area") ? dataTokens["area"].ToString() : null;
 			Controller = routeData["controller"].ToString();
 			Action = routeData["action"].ToString();

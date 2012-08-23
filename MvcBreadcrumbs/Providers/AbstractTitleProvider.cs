@@ -1,5 +1,4 @@
 ﻿using System.Web.Routing;
-using MvcBreadcrumbs.Providers.AbstractTitleProviderExtensions;
 
 namespace MvcBreadcrumbs.Providers
 {
@@ -9,6 +8,7 @@ namespace MvcBreadcrumbs.Providers
 		{
 			var contextData = new NodeData(context);
 			if (node.Data == contextData) {
+				node.Data.CopyQueryString(context);
 				var id = GetId(node.Data, context);
 				if (id > 0) {
 					return GetTitleInternal(node, id);
@@ -19,33 +19,29 @@ namespace MvcBreadcrumbs.Providers
 
 		protected abstract string GetTitleInternal(Node node, long id);
 
-		protected virtual long GetId(NodeData nodeData, RequestContext context)
+		protected virtual string IdKey
 		{
-			string key = "id";
-			var result = context.RouteData.Values.GetValue(key) ?? nodeData.RouteValues.GetValue(key);
+			get { return "id"; }
+		}
 
-			return result ?? 0;
+		private long GetId(NodeData nodeData, RequestContext context)
+		{
+			long result;
+			if (context.RouteData.Values.ContainsKey(IdKey) && context.RouteData.Values[IdKey] != null && long.TryParse(context.RouteData.Values[IdKey].ToString(), out result)) {
+				return result;
+			}
+			if (long.TryParse(context.HttpContext.Request.QueryString.Get(IdKey), out result)) {
+				return result;
+			}
+			if (nodeData.RouteValues.ContainsKey(IdKey) && nodeData.RouteValues[IdKey] != null && long.TryParse(nodeData.RouteValues[IdKey].ToString(), out result)) {
+				return result;
+			}
+			return 0;
 		}
 
 		protected virtual string DefaultTitle
 		{
 			get { return "..."; }
-		}
-	}
-
-	namespace AbstractTitleProviderExtensions
-	{
-		internal static class RouteValueDictionaryExtensions
-		{
-			internal static long? GetValue(this RouteValueDictionary dictionary, string key)
-			{
-				long result;
-				if (dictionary.ContainsKey(key) && long.TryParse(dictionary[key].ToString(), out result)) {
-					return result;
-				}
-
-				return null;
-			}
 		}
 	}
 }
