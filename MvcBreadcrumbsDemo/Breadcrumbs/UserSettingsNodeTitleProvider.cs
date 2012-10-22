@@ -10,7 +10,10 @@ namespace MvcBreadcrumbsDemo.Breadcrumbs
 		{
 			//id here is "settingId" - based on it,
 			var name = GetUserNameBySettingId(id);
-			node.UpdateParentData(name, id);
+			node.UpdateParentData(parentData => {
+				parentData.Title = name;
+				parentData.RouteValues["id"] = id;
+			});
 
 			return "Settings";
 		}

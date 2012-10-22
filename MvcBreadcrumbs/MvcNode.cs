@@ -26,7 +26,7 @@ namespace MvcBreadcrumbs
 			SetupNodeData(action, null);
 		}
 
-		internal override Node FindNode(NodeData searchData)
+		public override Node FindNode(NodeData searchData)
 		{
 			if (Data == searchData) 
 				return this;

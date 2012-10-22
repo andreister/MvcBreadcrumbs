@@ -28,7 +28,7 @@ namespace MvcBreadcrumbs
 			}
 		}
 
-		internal abstract Node FindNode(NodeData searchData);
+		public abstract Node FindNode(NodeData searchData);
 
 		public void UpdateParentData(Action<NodeData> update)
 		{
