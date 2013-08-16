@@ -1,8 +1,9 @@
-A simple type-safe dynamic breadcrumbs generator for ASP.NET MVC projects.
+Type-safe dynamic breadcrumbs for ASP.NET MVC projects.
 ==============
 
-- Breadcrumbs are defined with controllers/actions as lambdas in C# code (instead of XML config), so the compiler will warn you if a breadcrumb gets out of sync with the code.
-- Breadcrumbs are created dynamically, ie the title, visibility and clickability can be changed at runtime.
+- Breadcrumbs are defined as C# lambdas (rather than in plain text XML), so the compiler will warn you if a breadcrumb gets out of sync with the code.
+- Breadcrumbs are created dynamically, which is especially useful for intranet projects with thousands of pages.
+- Title, visibility and clickability can be changed at runtime.
 
 An example of breadcrumbs builder:
 
