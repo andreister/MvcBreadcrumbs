@@ -1,4 +1,4 @@
-body { font-size: 75%; font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif; color: #232323; background-color: #fff; }
+body { font-size: 75%; font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif; color: #232323; background-color: #fff; margin: 100px; }
 
 #breadcrumbs {font-size: 0.8em;}
 #breadcrumbs a, span { margin: 0 .4em 0 0; }

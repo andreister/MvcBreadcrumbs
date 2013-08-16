@@ -8,11 +8,11 @@ namespace MvcBreadcrumbs
 		internal Node Node { get; private set; }
 		
 		public string Title { get; set; }
-		public bool IsVisible { get; set; }
-		public bool IsClickable { get; set; }
+		
 		public string Area { get; set; }
 		public string Controller { get; set; }
 		public string Action { get; set; }
+		
 		public RouteValueDictionary RouteValues { get; private set; }
 		public NameValueCollection QueryString { get; private set; }
 
@@ -21,8 +21,6 @@ namespace MvcBreadcrumbs
 			Node = node;
 			RouteValues = new RouteValueDictionary();
 			QueryString = new NameValueCollection();
-			IsClickable = true;
-			IsVisible = true;
 		}
 
 		internal void CopyQueryString(RequestContext context)

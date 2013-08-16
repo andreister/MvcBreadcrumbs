@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -13,7 +12,7 @@ namespace MvcBreadcrumbs
 	public class Generator
 	{
 		private readonly Node _root;
-		private static Generator _instance;
+		private static volatile Generator _instance;
 		private static readonly object _lock = new object();
 
 		private Generator(Node root)
@@ -42,22 +41,17 @@ namespace MvcBreadcrumbs
 			var breadcrumbs = BuildTree(context);
 			for (int i = 0; i < breadcrumbs.Count; i++) {
 				var data = breadcrumbs[i].Data;
-				if (!data.IsVisible) {
-					break;
-				}
 
-				MvcHtmlString link = null;
-				if (data.IsClickable) {
-					if (i == 0) {
-						link = new MvcHtmlString(string.Format("<a href='/'>{0}</a>", data.Title));
+				MvcHtmlString link;
+				if (i == 0) {
+					link = new MvcHtmlString("<a href='" + new UrlHelper(context).Content("~/") + "'>" + data.Title + "</a>");
+				}
+				else {
+					var routeValues = data.RouteValues;
+					foreach (string key in data.QueryString.Keys) {
+						routeValues[key] = data.QueryString[key];
 					}
-					else {
-						var routeValues = data.RouteValues;
-						foreach (string key in data.QueryString.Keys) {
-							routeValues[key] = data.QueryString[key];
-						}
-						link = html.ActionLink(data.Title, data.Action, data.Controller, routeValues, null);
-					}
+					link = html.ActionLink(data.Title, data.Action, data.Controller, routeValues, null);
 				}
 
 				data.QueryString.Clear();
@@ -117,7 +111,7 @@ namespace MvcBreadcrumbs
 		{
 			internal static void Insert(this List<Node> list, Node node, RequestContext context)
 			{
-				node.ApplyProviders(context);
+				node.UpdateTitle(context);
 				list.Insert(0, node);
 			}
 		}

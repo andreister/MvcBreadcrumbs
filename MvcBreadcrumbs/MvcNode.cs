@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using MvcBreadcrumbs.Providers;
@@ -9,19 +10,13 @@ namespace MvcBreadcrumbs
 		where TController : IController
 	{
 		public MvcNode(string title, Expression<Action<TController>> action, params Node[] children) 
-			: base(null, null, null, children)
+			: base(null, children)
 		{
 			SetupNodeData(action, title);
 		}
 
 		public MvcNode(ITitleProvider titleProvider, Expression<Action<TController>> action, params Node[] children) 
-			: base(titleProvider, null, null, children)
-		{
-			SetupNodeData(action, null);
-		}
-
-		public MvcNode(ITitleProvider titleProvider, IVisibilityProvider visibilityProvider, IClickabilityProvider clickabilityProvider, Expression<Action<TController>> action, params Node[] children)
-			: base(titleProvider, visibilityProvider, clickabilityProvider, children)
+			: base(titleProvider, children)
 		{
 			SetupNodeData(action, null);
 		}
@@ -44,8 +39,15 @@ namespace MvcBreadcrumbs
 		private void SetupNodeData(Expression<Action<TController>> action, string title)
 		{
 			var controllerName = typeof(TController).Name.Substring(0, typeof(TController).Name.Length - "Controller".Length).ToLower();
-			var actionName = (action != null) ? ((MethodCallExpression)action.Body).Method.Name.ToLower() : "index";
-
+			
+			var actionMethod = (action != null) ? ((MethodCallExpression)action.Body).Method : null;
+			var actionName = (actionMethod != null) ? actionMethod.Name.ToLower() : "index";
+			
+			AuthorizeAttribute = (actionMethod != null) ? actionMethod.GetCustomAttributes(typeof(AuthorizeAttribute), true).FirstOrDefault() as AuthorizeAttribute : null;
+			if (AuthorizeAttribute == null) {
+				AuthorizeAttribute = typeof (TController).GetCustomAttributes(typeof (AuthorizeAttribute), true).FirstOrDefault() as AuthorizeAttribute;
+			}
+			
 			string area = null;
 			string controllerFullName = typeof(TController).FullName ?? "";
 			int areaNameIndex = controllerFullName.IndexOf("Areas");
@@ -61,6 +63,5 @@ namespace MvcBreadcrumbs
 				Action = actionName
 			};
 		}
-
 	}
 }

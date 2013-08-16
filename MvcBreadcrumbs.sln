@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBreadcrumbs", "MvcBreadcrumbs\MvcBreadcrumbs.csproj", "{A133673B-0C0D-42BA-A76C-959BA153BE0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcBreadcrumbsDemo", "MvcBreadcrumbsDemo\MvcBreadcrumbsDemo.csproj", "{BAED229B-0D60-46AE-AAFC-8F1A09A2DDF8}"
