@@ -63,6 +63,8 @@ namespace MvcBreadcrumbs
 
 		public List<Node> BuildTree(RequestContext context)
 		{
+			_root.Cleanup();
+
 			var result = new List<Node>();
 
 			var searchData = new NodeData(context);

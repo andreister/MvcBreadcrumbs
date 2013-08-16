@@ -16,7 +16,7 @@ namespace MvcBreadcrumbsDemo.Areas.Admin.Controllers
 
 		public ActionResult Display(long id)
 		{
-			return View();
+			return View(id);
 		}
 	}
 }

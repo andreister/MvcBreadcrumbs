@@ -1,5 +1,4 @@
-﻿using System.IO;
-using MvcBreadcrumbs;
+﻿using MvcBreadcrumbs;
 using MvcBreadcrumbs.Providers;
 
 namespace MvcBreadcrumbsDemo.Breadcrumbs
@@ -14,7 +13,7 @@ namespace MvcBreadcrumbsDemo.Breadcrumbs
 
 		private string GetUserNameByUserId(long id)
 		{
-			return "[" + Path.GetRandomFileName().Replace(".", "") + ", taken from database!]";
+			return string.Format("[User{0}]", id);
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using MvcBreadcrumbs;
+﻿using MvcBreadcrumbs;
 using MvcBreadcrumbs.Providers;
 
 namespace MvcBreadcrumbsDemo.Breadcrumbs
@@ -8,19 +7,29 @@ namespace MvcBreadcrumbsDemo.Breadcrumbs
 	{
 		protected override string GetTitleInternal(Node node, long id)
 		{
-			//id here is "settingId" - based on it,
-			var name = GetUserNameBySettingId(id);
+			var user = GetUserBySettingId(id);
+			
 			node.UpdateParentData(parentData => {
-				parentData.Title = name;
-				parentData.RouteValues["id"] = id;
+				parentData.Title = user.Name;
+				parentData.RouteValues["id"] = user.Id;
 			});
 
 			return "Settings";
 		}
 
-		private string GetUserNameBySettingId(long id)
+		/// <summary>
+		/// The rule in this sample project is that settingId=userId*10, see "Display.cshtml"
+		/// In real app we'd get the user from cache or database.
+		/// </summary>
+		private User GetUserBySettingId(long id)
 		{
-			return "[" + Path.GetRandomFileName().Replace(".", "") + ", taken from database!]";
+			return new User {Id = id/10, Name = "User #" + (id/10) };
+		}
+
+		private class User
+		{
+			public string Name { get; set; } 
+			public long Id { get; set; } 
 		}
 	}
 }

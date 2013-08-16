@@ -16,7 +16,7 @@ namespace MvcBreadcrumbsDemo.Breadcrumbs
 					new MvcNode<UsersController>("Users", x => x.Index(),
 						new MvcNode<UsersController>("Create", x => x.Create()),
 						new MvcNode<UsersController>(new UserNodeTitleProvider(), x => x.Display(0),
-							new MvcNode<UserSettingsController>(new UserSettingsNodeTitleProvider(), x => x.Index())
+							new MvcNode<UserSettingsController>(new UserSettingsNodeTitleProvider(), x => x.Index(0))
 						)
 					)
 				),
